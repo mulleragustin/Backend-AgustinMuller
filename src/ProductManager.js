@@ -14,14 +14,7 @@ class ProductManager {
 
     return id;
   }
-  async addProduct({
-    title,
-    description,
-    code,
-    price,
-    stock,
-    category,
-  }) {
+  async addProduct({ title, description, code, price, stock, category }) {
     const newProduct = {
       id: await this.generateId(),
       title,

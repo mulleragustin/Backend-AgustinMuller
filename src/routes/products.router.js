@@ -31,15 +31,25 @@ productsRouter.get("/:pid", async (req, res) => {
 });
 
 productsRouter.post("/", async (req, res) => {
-  const {
-    title,
-    description,
-    code,
-    price,
-    stock,
-    category,
-  } = req.body;
-  if(!req.body.title || !req.body.description || !req.body.code || !req.body.price || !req.body.stock || !req.body.category) {return res.status(400).send({error : "Missing parameters"})}
+  const { title, description, code, price, stock, category } = req.body;
+  if (
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.code ||
+    !req.body.price ||
+    !req.body.stock ||
+    !req.body.category
+  ) {
+    return res.status(400).send({ error: "Missing parameters" });
+  }
+  const products = await Manager.getProducts();
+  const codeProducts = products.map((e) => e.code);
+  if (codeProducts.includes(req.body.code)) {
+    return res
+      .status(400)
+      .send({ error: "el codigo ya pertence a un producto" });
+  }
+
   const newProduct = {
     title,
     description,
@@ -52,8 +62,6 @@ productsRouter.post("/", async (req, res) => {
   res.send(await Manager.getProducts());
 });
 
-productsRouter.put("/",async (req,res) => {
-
-})
+productsRouter.put("/", async (req, res) => {});
 
 export default productsRouter;
