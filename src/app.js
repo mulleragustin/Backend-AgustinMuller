@@ -1,10 +1,13 @@
 import express from "express";
 import ProductManager from "./ProductManager.js";
-
+import productsRouter from "./routes/products.router.js";
 const app = express();
-const Producto = new ProductManager("./data.json");
+
+app.use("/api/products", productsRouter)
+/* app.use(express.json());
+const Producto = new ProductManager("./src/data.json");
 const allproducts = await Producto.getProducts();
-//
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
@@ -17,9 +20,10 @@ app.get("/products", async (req, res) => {
     return res.send(resultado);
   }
 });
+
 app.get("/products/:pid", async (req, res) => {
-  const { pid } = req.params;
-  const product = await Producto.getProductsById(Number(pid));
+  const pid  = Number(req.params.pid);
+  const product = await Producto.getProductsById(pid);
   if (!product) {
     return res
       .status(404)
@@ -27,7 +31,8 @@ app.get("/products/:pid", async (req, res) => {
   } else {
     return res.send(product);
   }
-});
+}); */
+
 app.listen(8080, () => {
   console.log("Server listening on port 8080");
 });

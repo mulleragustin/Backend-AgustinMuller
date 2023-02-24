@@ -5,7 +5,7 @@ class ProductManager {
   constructor(path) {
     this.path = path;
   }
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct({title, description, price, thumbnail, code, stock}) {
     const newProduct = {
       id: this.#accumulator,
       title,
