@@ -1,19 +1,37 @@
 import fs from "fs";
-
+import crypto from "crypto";
 class ProductManager {
-  #accumulator = 1;
   constructor(path) {
     this.path = path;
   }
-  async addProduct({title, description, price, thumbnail, code, stock}) {
+  async generateId() {
+    const products = await this.getProducts();
+    const ids = products.map((e) => e.id);
+    let id;
+    do {
+      id = crypto.randomInt(1, 1000000000000);
+    } while (ids.includes(id));
+
+    return id;
+  }
+  async addProduct({
+    title,
+    description,
+    code,
+    price,
+    stock,
+    category,
+  }) {
     const newProduct = {
-      id: this.#accumulator,
+      id: await this.generateId(),
       title,
       description,
-      price,
-      thumbnail,
       code,
+      price,
+      status: true,
       stock,
+      category,
+      thumbnails: [],
     };
 
     const products = await this.getProducts();
@@ -21,8 +39,6 @@ class ProductManager {
     const updateProducts = [...products, newProduct];
 
     await fs.promises.writeFile(this.path, JSON.stringify(updateProducts));
-
-    this.#accumulator++;
   }
   async readFile() {
     const products = await fs.promises.readFile(this.path, "utf-8");

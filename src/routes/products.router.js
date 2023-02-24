@@ -31,10 +31,13 @@ productsRouter.get("/:pid", async (req, res) => {
     }
 });
 
-/* productsRouter.post("/",async (req,res) => {
-
+productsRouter.post("/",async (req,res) => {
+    const {title, description, code, price, status, stock, category, thumbnails} = req.body
+    const newProduct = {title, description, code, price, status, stock, category, thumbnails}
+    await Manager.addProduct(newProduct)
+    res.send(await Manager.getProducts())
 })
- */
+
 export default productsRouter
 
 
