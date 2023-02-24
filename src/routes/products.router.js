@@ -36,23 +36,24 @@ productsRouter.post("/", async (req, res) => {
     description,
     code,
     price,
-    status,
     stock,
     category,
-    thumbnails,
   } = req.body;
+  if(!req.body.title || !req.body.description || !req.body.code || !req.body.price || !req.body.stock || !req.body.category) {return res.status(400).send({error : "Missing parameters"})}
   const newProduct = {
     title,
     description,
     code,
     price,
-    status,
     stock,
     category,
-    thumbnails,
   };
   await Manager.addProduct(newProduct);
   res.send(await Manager.getProducts());
 });
+
+productsRouter.put("/",async (req,res) => {
+
+})
 
 export default productsRouter;
