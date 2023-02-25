@@ -72,7 +72,7 @@ class ProductManager {
       });
       await fs.promises.writeFile(this.path, JSON.stringify(allproducts));
     } catch (e) {
-      throw new Error("No se pudo actualizar el producto");
+      console.log("No se pudo actualizar el producto");
     }
   }
   async deleteProduct(id) {

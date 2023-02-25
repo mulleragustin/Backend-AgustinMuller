@@ -65,21 +65,27 @@ productsRouter.post("/", async (req, res) => {
 productsRouter.put("/:pid", async (req, res) => {
   const pid = Number(req.params.pid);
   const product = await Manager.getProductsById(pid);
-  if (
+  if (req.body.id !== product.id) {
+    return res
+      .status(400)
+      .send({ error: "No se puede modificar el id del producto" });
+  } else if (!product) {
+    return res
+      .status(404)
+      .send({ error: `No existe producto con el id ${pid}` });
+  } else if (
     !req.body.title ||
     !req.body.description ||
     !req.body.code ||
     !req.body.price ||
     !req.body.stock ||
+    !req.body.status ||
+    !req.body.thumbnails ||
     !req.body.category
   ) {
     return res.status(400).send({ error: "Missing parameters" });
-  } else if (!product) {
-    return res
-      .status(404)
-      .send({ error: `No existe producto con el id ${pid}` });
   } else {
-    await Manager.updateBodyProduct(pid, req.body);
+    await Manager.updateProduct(pid, req.body);
     console.log(req.body);
     return res.status(200).send(await Manager.getProductsById(pid));
   }
