@@ -74,8 +74,7 @@ productsRouter.put("/:pid", async (req, res) => {
     !req.body.category
   ) {
     return res.status(400).send({ error: "Missing parameters" });
-  }
-  if (!product) {
+  } else if (!product) {
     return res
       .status(404)
       .send({ error: `No existe producto con el id ${pid}` });
