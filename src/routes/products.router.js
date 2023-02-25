@@ -26,7 +26,7 @@ productsRouter.get("/:pid", async (req, res) => {
       .status(404)
       .send({ error: `No existe producto con el id ${pid}` });
   } else {
-    return res.send(product);
+    return res.status(200).send(product);
   }
 });
 
@@ -62,6 +62,19 @@ productsRouter.post("/", async (req, res) => {
   res.send(await Manager.getProducts());
 });
 
-productsRouter.put("/", async (req, res) => {});
+productsRouter.put("/:pid", async (req, res) => {
+  const pid = Number(req.params.pid);
+  const product = await Manager.getProductsById(pid);
+
+  if (!product) {
+    return res
+      .status(404)
+      .send({ error: `No existe producto con el id ${pid}` });
+  } else {
+    await Manager.updateBodyProduct(pid, req.body);
+    console.log(req.body);
+    return res.status(200).send(await Manager.getProductsById(pid));
+  }
+});
 
 export default productsRouter;

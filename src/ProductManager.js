@@ -58,20 +58,21 @@ class ProductManager {
       console.log(error);
     }
   }
-  async updateProduct(id, changeProperty, newValue) {
+  async updateProduct(id, body) {
     try {
-      if (changeProperty === "id") {
-        throw Error("No se puede modificar el id");
-      }
-      const allproducts = await this.getProducts();
-      const productUpdate = await this.getProductsById(id);
-      const index = await allproducts.findIndex(
-        (p) => p.id === productUpdate.id
-      );
-      allproducts[index][changeProperty] = newValue;
+      let allproducts = await this.getProducts();
+      allproducts = allproducts.map((p) => {
+        if (id === p.id) {
+          return {
+            id: p.id,
+            ...body,
+          };
+        }
+        return p;
+      });
       await fs.promises.writeFile(this.path, JSON.stringify(allproducts));
     } catch (e) {
-      console.log(e);
+      throw new Error("No se pudo actualizar el producto");
     }
   }
   async deleteProduct(id) {
