@@ -65,7 +65,16 @@ productsRouter.post("/", async (req, res) => {
 productsRouter.put("/:pid", async (req, res) => {
   const pid = Number(req.params.pid);
   const product = await Manager.getProductsById(pid);
-
+  if (
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.code ||
+    !req.body.price ||
+    !req.body.stock ||
+    !req.body.category
+  ) {
+    return res.status(400).send({ error: "Missing parameters" });
+  }
   if (!product) {
     return res
       .status(404)
