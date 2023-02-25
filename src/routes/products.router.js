@@ -91,4 +91,16 @@ productsRouter.put("/:pid", async (req, res) => {
   }
 });
 
+productsRouter.delete("/:pid", async (req, res) => {
+  const pid = Number(req.params.pid);
+  const product = await Manager.getProductsById(pid);
+  if (!product) {
+    return res
+      .status(404)
+      .send({ error: `No existe producto con el id ${pid}` });
+  }
+  await Manager.deleteProduct(pid);
+  res.send(await Manager.getProducts());
+});
+
 export default productsRouter;
