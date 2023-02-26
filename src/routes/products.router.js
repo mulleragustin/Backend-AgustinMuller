@@ -11,10 +11,10 @@ productsRouter.get("/", async (req, res) => {
   const allproducts = await Manager.getProducts();
   const { limit } = req.query;
   if (!limit) {
-    return res.send(allproducts);
+    return res.send(allproducts).status(200);
   } else {
     const resultado = allproducts.slice(0, limit);
-    return res.send(resultado);
+    return res.send(resultado).status(200);
   }
 });
 
@@ -59,7 +59,7 @@ productsRouter.post("/", async (req, res) => {
     category,
   };
   await Manager.addProduct(newProduct);
-  res.send(await Manager.getProducts());
+  res.send(await Manager.getProducts()).status(200);
 });
 
 productsRouter.put("/:pid", async (req, res) => {
@@ -100,7 +100,7 @@ productsRouter.delete("/:pid", async (req, res) => {
       .send({ error: `No existe producto con el id ${pid}` });
   }
   await Manager.deleteProduct(pid);
-  res.send(await Manager.getProducts());
+  res.send(await Manager.getProducts()).status(200);
 });
 
 export default productsRouter;

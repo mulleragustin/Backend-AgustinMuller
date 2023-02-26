@@ -11,7 +11,7 @@ const Product = new ProductManager("src/products.json");
 
 cartsRouter.post("/", async (req, res) => {
   await Cart.createCart();
-  res.send(await Cart.getCarts());
+  res.send(await Cart.getCarts()).status(200);
 });
 
 cartsRouter.get("/:cid", async (req, res) => {
@@ -43,7 +43,7 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
       .send({ error: `No existe producto con el id ${pid}` });
   } else {
     await Cart.addToCart(cid, pid, Number(req.body.quantity));
-    res.send(await Cart.getProductsCartById(cid));
+    res.send(await Cart.getProductsCartById(cid)).status(200);
   }
 });
 
