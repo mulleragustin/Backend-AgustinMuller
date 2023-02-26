@@ -53,11 +53,11 @@ class ProductManager {
   async getProductsById(id) {
     try {
       const products = await this.getProducts();
-      let resultado = await products.find((element) => element.id === id);
-      if (!resultado) {
+      let result = await products.find((element) => element.id === id);
+      if (!result) {
         throw new Error("Not Found");
       } else {
-        return resultado;
+        return result;
       }
     } catch (error) {
       console.log(error);
@@ -65,8 +65,8 @@ class ProductManager {
   }
   async updateProduct(id, body) {
     try {
-      let allproducts = await this.getProducts();
-      allproducts = allproducts.map((p) => {
+      let allProducts = await this.getProducts();
+      allProducts = allProducts.map((p) => {
         if (id === p.id) {
           return {
             id: p.id,
@@ -75,23 +75,20 @@ class ProductManager {
         }
         return p;
       });
-      await fs.promises.writeFile(this.path, JSON.stringify(allproducts));
+      await fs.promises.writeFile(this.path, JSON.stringify(allProducts));
     } catch (e) {
-      console.log("No se pudo actualizar el producto");
+      console.log(e);
     }
   }
   async deleteProduct(id) {
     try {
-      const allproducts = await this.getProducts();
+      const allProducts = await this.getProducts();
       const deleteProduct = await this.getProductsById(id);
-      const index = await allproducts.findIndex(
+      const index = await allProducts.findIndex(
         (p) => p.id === deleteProduct.id
       );
-      allproducts.splice(index, 1);
-      await fs.promises.writeFile(
-        this.path,
-        JSON.stringify(allproducts, JSON.stringify(allproducts))
-      );
+      allProducts.splice(index, 1);
+      await fs.promises.writeFile(this.path, JSON.stringify(allProducts));
     } catch (e) {
       console.log(e);
     }

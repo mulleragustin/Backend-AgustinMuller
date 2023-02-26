@@ -13,8 +13,8 @@ productsRouter.get("/", async (req, res) => {
   if (!limit) {
     return res.send(allproducts).status(200);
   } else {
-    const resultado = allproducts.slice(0, limit);
-    return res.send(resultado).status(200);
+    const result = allproducts.slice(0, limit);
+    return res.send(result).status(200);
   }
 });
 
@@ -24,7 +24,7 @@ productsRouter.get("/:pid", async (req, res) => {
   if (!product) {
     return res
       .status(404)
-      .send({ error: `No existe producto con el id ${pid}` });
+      .send({ error: `The product with the id ${pid} does not exist. ` });
   } else {
     return res.status(200).send(product);
   }
@@ -40,14 +40,14 @@ productsRouter.post("/", async (req, res) => {
     !req.body.stock ||
     !req.body.category
   ) {
-    return res.status(400).send({ error: "Missing parameters" });
+    return res.status(400).send({ error: "Missing parameters." });
   }
   const products = await Manager.getProducts();
   const codeProducts = products.map((e) => e.code);
   if (codeProducts.includes(req.body.code)) {
     return res
       .status(400)
-      .send({ error: "el codigo ya pertence a un producto" });
+      .send({ error: "The code already belongs to a product." });
   }
 
   const newProduct = {
@@ -68,11 +68,11 @@ productsRouter.put("/:pid", async (req, res) => {
   if (req.body.id !== product.id) {
     return res
       .status(400)
-      .send({ error: "No se puede modificar el id del producto" });
+      .send({ error: "Cannot modify product id." });
   } else if (!product) {
     return res
       .status(404)
-      .send({ error: `No existe producto con el id ${pid}` });
+      .send({ error: `The product with the id ${pid} does not exist. ` });
   } else if (
     !req.body.title ||
     !req.body.description ||
@@ -83,7 +83,7 @@ productsRouter.put("/:pid", async (req, res) => {
     !req.body.thumbnails ||
     !req.body.category
   ) {
-    return res.status(400).send({ error: "Missing parameters" });
+    return res.status(400).send({ error: "Missing parameters." });
   } else {
     await Manager.updateProduct(pid, req.body);
     console.log(req.body);
@@ -97,7 +97,7 @@ productsRouter.delete("/:pid", async (req, res) => {
   if (!product) {
     return res
       .status(404)
-      .send({ error: `No existe producto con el id ${pid}` });
+      .send({ error: `The product with the id ${pid} does not exist ` });
   }
   await Manager.deleteProduct(pid);
   res.send(await Manager.getProducts()).status(200);

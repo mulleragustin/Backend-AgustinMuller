@@ -20,7 +20,7 @@ cartsRouter.get("/:cid", async (req, res) => {
   if (!cart) {
     return res
       .status(404)
-      .send({ error: `No existe carrito con el id ${cid}` });
+      .send({ error: `The cart with the id ${cid} does not exist. ` });
   } else {
     return res.status(200).send(cart);
   }
@@ -32,15 +32,15 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
   const product = await Product.getProductsById(pid);
   const cart = await Cart.getProductsCartById(cid);
   if (!req.body.quantity) {
-    return res.status(400).send({ error: "Missing parameters" });
+    return res.status(400).send({ error: "Missing parameters." });
   } else if (!cart) {
     return res
       .status(404)
-      .send({ error: `No existe carrito con el id ${cid}` });
+      .send({ error: `The cart with the id ${cid} does not exist. ` });
   } else if (!product) {
     return res
       .status(404)
-      .send({ error: `No existe producto con el id ${pid}` });
+      .send({ error: `The product with the id ${pid} does not exist. ` });
   } else {
     await Cart.addToCart(cid, pid, Number(req.body.quantity));
     res.send(await Cart.getProductsCartById(cid)).status(200);

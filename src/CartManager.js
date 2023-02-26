@@ -30,8 +30,8 @@ class CartManager {
         products: [],
       };
       let allCarts = await this.getCarts();
-      const asd = [...allCarts, newCart];
-      await fs.promises.writeFile(this.path, JSON.stringify(asd));
+      allCarts = [...allCarts, newCart];
+      await fs.promises.writeFile(this.path, JSON.stringify(allCarts));
     } catch (e) {
       console.log(e);
     }
