@@ -1,5 +1,6 @@
 import fs from "fs";
 import crypto from "crypto";
+
 class ProductManager {
   constructor(path) {
     this.path = path;
@@ -15,23 +16,27 @@ class ProductManager {
     return id;
   }
   async addProduct({ title, description, code, price, stock, category }) {
-    const newProduct = {
-      id: await this.generateId(),
-      title,
-      description,
-      code,
-      price,
-      status: true,
-      stock,
-      category,
-      thumbnails: [],
-    };
+    try {
+      const newProduct = {
+        id: await this.generateId(),
+        title,
+        description,
+        code,
+        price,
+        status: true,
+        stock,
+        category,
+        thumbnails: [],
+      };
 
-    const products = await this.getProducts();
+      const products = await this.getProducts();
 
-    const updateProducts = [...products, newProduct];
+      const updateProducts = [...products, newProduct];
 
-    await fs.promises.writeFile(this.path, JSON.stringify(updateProducts));
+      await fs.promises.writeFile(this.path, JSON.stringify(updateProducts));
+    } catch (e) {
+      console.log(e);
+    }
   }
   async readFile() {
     const products = await fs.promises.readFile(this.path, "utf-8");

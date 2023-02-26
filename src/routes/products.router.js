@@ -5,7 +5,7 @@ const productsRouter = Router();
 
 productsRouter.use(json());
 
-const Manager = new ProductManager("./src/productos.json");
+const Manager = new ProductManager("./src/products.json");
 
 productsRouter.get("/", async (req, res) => {
   const allproducts = await Manager.getProducts();
