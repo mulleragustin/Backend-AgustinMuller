@@ -1,0 +1,18 @@
+<div className="row">
+  {{#each products}}
+    <div className="col-md-4 offset-md-2">
+      <img src="#" alt="asd" className="img-fluid" />
+    </div>
+    <div className="col-md-4">
+      <h1>{{title}}</h1>
+      <h5>{{category}}</h5>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
+        fugit fuga quam dolorum est hic quis laborum ipsum voluptates commodi
+        officia accusantium nisi nam a esse, impedit quasi vitae nobis?</p>
+      <p><b>${{price}}</b></p>
+      <p>Stock: {{stock}}</p>
+      <button>Agregar al carrito</button>
+
+    </div>
+  {{/each}}
+</div>

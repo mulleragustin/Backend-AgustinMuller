@@ -66,9 +66,7 @@ productsRouter.put("/:pid", async (req, res) => {
   const pid = Number(req.params.pid);
   const product = await Manager.getProductsById(pid);
   if (req.body.id !== product.id) {
-    return res
-      .status(400)
-      .send({ error: "Cannot modify product id." });
+    return res.status(400).send({ error: "Cannot modify product id." });
   } else if (!product) {
     return res
       .status(404)
