@@ -1,20 +1,20 @@
-<div className="row">
-  {{#each products}}
-    <div className="col-md-4 offset-md-2">
-      <img src="#" alt="asd" className="img-fluid" />
-    </div>
-    <div className="col-md-4">
-      <h1>{{title}}</h1>
-      <h5>{{category}}</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus
-        fugit fuga quam dolorum est hic quis laborum ipsum voluptates commodi
-        officia accusantium nisi nam a esse, impedit quasi vitae nobis?</p>
-      <p><b>${{price}}</b></p>
-      <p>Stock: {{stock}}</p>
-      <button>Agregar al carrito</button>
-
-    </div>
-  {{/each}}
+<div class="container bg-light">
+  <div class="row">
+    {{#each products}}
+      <div class="col-md-4 py-2">
+        {{! <a to={"/item/" + item.id} class="text-dark text-decoration-none"> }}
+        <div class="card text-center border border-0">
+          <img src={{thumbnails}} class="img-fluid" alt={{title}} />
+          <div class="card-body">
+            <p class="card-text">{{category}}</p>
+            <p class="card-text">{{title}}</p>
+            <p class="card-text">$ {{price}}</p>
+            <button>Agregar al carrito</button>
+          </div>
+        </div>
+        {{! </a> }}
+      </div>
+    {{/each}}
+  </div>
 </div>
-
 <script src="/js/index.js"></script>
