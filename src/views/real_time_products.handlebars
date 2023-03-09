@@ -1,10 +1,14 @@
-<div class="container bg-light">
+<div class="container bg-light" id="container-products">
   <div class="row">
     {{#each products}}
       <div class="col-md-4 py-2">
-        {{! <a to={"/item/" + item.id} class="text-dark text-decoration-none"> }}
         <div class="card text-center border border-0">
-          <img src={{thumbnails}} class="img-fluid" alt={{title}} />
+          <img
+            src={{thumbnails}}
+            class="card-img-top"
+            id="img-cont"
+            alt={{title}}
+          />
           <div class="card-body">
             <p class="card-text">{{category}}</p>
             <p class="card-text">{{title}}</p>
@@ -12,9 +16,9 @@
             <button>Agregar al carrito</button>
           </div>
         </div>
-        {{! </a> }}
       </div>
     {{/each}}
   </div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

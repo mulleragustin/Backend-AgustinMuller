@@ -1,1 +1,18 @@
-<div>Hello world!!!</div>
+<div class="container bg-light">
+  <div class="row">
+    {{#each products}}
+      <div class="col-md-4 py-2">
+        <div class="card text-center border border-0" id="container-item">
+          <img src={{thumbnails}} id="img-cont" alt={{title}} />
+          <div class="card-body">
+            <p class="card-text">{{category}}</p>
+            <p class="card-text">{{title}}</p>
+            <p class="card-text">$ {{price}}</p>
+            <button>Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+{{! <script src="/js/index.js"></script> }}
